@@ -97,18 +97,25 @@ export default async (t, ctx) => {
     await t.waitForSelector('[data-testid="stExpander"] summary');
     await t.click('[data-testid="stExpander"] summary');                     // 첫 펼침 = 설정
     // 위치만 읽고(읽기 전용) 실제 마우스로 눌러요
-    const center = (expr) => t.js(`(() => { const el = ${expr}; if (!el) return null;
-      el.scrollIntoView({block: "center"}); const r = el.getBoundingClientRect();
+    // scroll = true면 화면 가운데로 가져와요 (펼친 목록의 옵션은 스크롤하면 목록이 닫혀서 위치만 읽어요)
+    const center = (expr, scroll = true) => t.js(`(() => { const el = ${expr}; if (!el) return null;
+      if (${scroll}) el.scrollIntoView({block: "center"}); const r = el.getBoundingClientRect();
       return {x: r.left + r.width / 2, y: r.top + r.height / 2}; })()`);
     const compare = `[...document.querySelectorAll('[data-testid="stSelectbox"]')]
       .find(e => e.innerText.includes('COMPARE (비교)'))?.querySelector('[role="combobox"], input')`;
-    await t.waitFor(`!!(${compare})`, { timeout: 20000 });
+    // 펼침이 열리기 전에는 입력 칸이 있어도 크기가 0이라 눌리지 않아요 → 보일 때까지
+    await t.waitFor(`(${compare})?.getBoundingClientRect().height > 0`, { timeout: 20000 });
+    await t.sleep(500);
     let pt = await center(compare);
     await t.clickAt(pt.x, pt.y);
+    await t.sleep(800);                                                      // 목록이 펼쳐지는 동안
     const option = `[...document.querySelectorAll('[role="option"]')].find(o => o.innerText.trim() === '2026 실적')`;
     await t.waitFor(`!!(${option})`, { timeout: 10000 });
-    pt = await center(option);
+    pt = await center(option, false);
     await t.clickAt(pt.x, pt.y);
+    await t.sleep(800);                                                      // 목록이 닫히고 값이 들어가는 동안
+    // 고른 값은 글자가 아니라 입력 칸 값(value)에 들어가요
+    await t.check("실적 모드: COMPARE = 2026 실적 선택됨", `(${compare})?.value === '2026 실적'`);
     const apply = `[...document.querySelectorAll('button')].find(b => b.innerText.includes('설정 적용'))`;   // ✅ 설정 적용
     await t.waitFor(`!!(${apply})`, { timeout: 10000 });
     pt = await center(apply);
@@ -119,8 +126,8 @@ export default async (t, ctx) => {
     await t.check("실적 모드: 오류 상자 없음", '!document.querySelector(\'[data-testid="stException"]\')');
     await t.check("실적 모드: 범례 = 달성 상태", `[...document.querySelectorAll('[data-testid="stMarkdownContainer"]')]
       .some(e => e.innerText.includes('막대 색 = 달성 상태') && e.innerText.includes('실적 ≥ 목표') && e.innerText.includes('미보고'))`);
-    await t.check("실적 모드: AX 차트 4개", `['ax_공정_오피스','ax_공정_교대','ax_설비_오피스','ax_설비_교대']
-      .every(k => document.querySelector('.st-key-' + k + ' .main-svg'))`);
+    await t.check("실적 모드: AX 차트 4개", `[...document.querySelectorAll('[data-testid="stPlotlyChart"]')]
+      .filter(e => e.querySelector('.main-svg') && e.textContent.includes('절감 공수')).length === 4`);
     await t.shot("dashboard-actual", "대시보드 실적 모드 (COMPARE 2026 실적)", { fullPage: true });
   });
 };
