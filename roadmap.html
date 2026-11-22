@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>반도체 Fab AX 전주기 운영 & 인력 가치 혁신 로드맵 (비주얼 다이어그램 에디션)</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <style>
+    :root {
+      --primary: #0A24E9;
+      --primary-strong: #152EAE;
+      --primary-soft: #E8ECFE;
+      --secondary: #29315D;
+      --ink: #0B0D17;
+      --muted: #5B6475;
+      --surface: #FFFFFF;
+      --bg: #F0F2F5;
+      --outline: #CACED6;
+      --error: #B42318;
+      --error-soft: #FCE8E7;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(11,13,23,0.06);
+      --shadow-md: 0 4px 14px rgba(11,13,23,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Pretendard, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 24px 60px;
+    }
+
+    /* 헤더 */
+    header {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 28px 36px;
+      border: 1px solid var(--outline);
+      margin-bottom: 24px;
+      position: relative;
+      box-shadow: var(--shadow-sm);
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+    .badge-pill {
+      display: inline-block;
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
+    h1 { font-size: 24px; font-weight: 800; color: var(--ink); margin-bottom: 6px; }
+    .subtitle { font-size: 13px; color: var(--muted); }
+    .header-actions { position: absolute; top: 28px; right: 36px; display: flex; gap: 8px; }
+    .btn {
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-outline { background: var(--surface); color: var(--ink); border-color: var(--outline); }
+
+    /* 메인 탭 */
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--outline);
+    }
+    .nav-btn {
+      padding: 10px 18px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    /* 공통 카드 */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-desc { font-size: 12px; color: var(--muted); margin-bottom: 18px; }
+
+    /* ========================================================
+       비주얼 다이어그램 스타일 (화이트 엔터프라이즈 정적 아키텍처)
+       ======================================================== */
+    .diag-container {
+      background: #F8F9FA;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin: 14px 0;
+    }
+
+    /* 정적 데이터 파이프라인 연결선 */
+    .pipe-connector {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 10px 0;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .pipe-connector::before, .pipe-connector::after {
+      content: "";
+      height: 1px;
+      background: var(--outline);
+      flex: 1;
+    }
+
+    .arch-layer {
+      background: #FFFFFF;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      box-shadow: 0 1px 2px rgba(11,13,23,0.03);
+    }
+    .arch-layer-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .arch-layer-tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .tag-gray { background: #E2E4E9; color: var(--ink); }
+    .tag-navy { background: #29315D; color: #FFFFFF; }
+    .tag-blue { background: var(--primary-soft); color: var(--primary); }
+
+    .arch-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .arch-box {
+      background: #F8F9FA;
+      border: 1px solid #E2E4E9;
+      border-radius: 6px;
+      padding: 10px 12px;
+      text-align: center;
+    }
+    .arch-box-title { font-size: 11px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+    .arch-box-desc { font-size: 10px; color: var(--muted); }
+
+    /* 프로세스 스텝 다이어그램 */
+    .step-flow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+    }
+    .step-node {
+      background: #FFFFFF;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      min-width: 170px;
+      flex-shrink: 0;
+      border-left: 4px solid var(--primary);
+    }
+    .step-node.point { border-left-color: var(--error); }
+    .step-node-tag { font-size: 9px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+    .step-node-name { font-size: 12px; font-weight: 700; color: var(--ink); margin: 2px 0; }
+    .step-node-sys { font-size: 10px; color: var(--primary); font-weight: 600; }
+    .step-arrow { color: var(--outline); font-size: 16px; flex-shrink: 0; }
+
+    /* 비교 다이어그램 */
+    .compare-boxes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 14px 0;
+    }
+    .compare-box {
+      background: #FFFFFF;
+      border: 1px solid var(--outline);
+      border-radius: var(--radius-md);
+      padding: 16px;
+    }
+    .compare-box.bad { border-top: 4px solid #5B6475; }
+    .compare-box.good { border-top: 4px solid var(--primary); background: #FAFBFD; }
+    .compare-box-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+
+    /* 시뮬레이터 테이블 */
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      background: #FFFFFF;
+    }
+    .task-table th, .task-table td {
+      border: 1px solid var(--outline);
+      padding: 8px 10px;
+      text-align: left;
+    }
+    .task-table th { background: #F8F9FA; font-weight: 700; color: var(--ink); }
+
+    /* 슬롯 아이콘 */
+    .slot-box {
+      background: #FFFFFF;
+      border: 1px solid var(--outline);
+      border-radius: 6px;
+      padding: 8px;
+      text-align: center;
+    }
+    .slot-icon { font-size: 16px; margin: 2px 0; }
+    .slot-txt { font-size: 10px; font-weight: 600; color: var(--primary); }
+
+    /* 푸터 */
+    footer {
+      text-align: center;
+      padding-top: 24px;
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--outline);
+      margin-top: 32px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 헤더 -->
+  <header>
+    <div class="badge-pill">Semiconductor Fab AX Architecture Roadmap</div>
+    <h1>반도체 Fab AX 전주기 운영 & 인력 가치 혁신 로드맵</h1>
+    <p class="subtitle">
+      복잡한 글 대신 <strong>직관적인 시스템 아키텍처 다이어그램</strong>과 <strong>현장 중심 E2E 플로우</strong>로 파트의 AX 운영 체계를 한눈에 설명합니다.
+    </p>
+    <div class="header-actions">
+      <button class="btn btn-outline" onclick="window.print()">🖨️ 인쇄 / PDF</button>
+      <a href="docs/ROADMAP.md" class="btn btn-primary" download>📥 문서 (.md)</a>
+    </div>
+  </header>
+
+  <!-- 메인 탭 내비게이션 (핵심 4대 뷰) -->
+  <div class="nav-tabs">
+    <button class="nav-btn active" onclick="switchTab(0)">🗺️ 1. 전사 시스템 아키텍처 다이어그램</button>
+    <button class="nav-btn" onclick="switchTab(1)">🧮 2. [체험] 소분류 업무 & FTE 시뮬레이터</button>
+    <button class="nav-btn" onclick="switchTab(2)">⚙️ 3. 교대 최소인원 기준정보 & 묶음 최적화 다이어그램</button>
+    <button class="nav-btn" onclick="switchTab(3)">🚀 4. 추진 마일스톤 (Phase 1~4)</button>
+  </div>
+
+  <!-- ========================================================
+       TAB 0: 전사 시스템 아키텍처 다이어그램 (엔터프라이즈 전주기)
+       ======================================================== -->
+  <div class="panel active" id="tab-0">
+    <div class="card">
+      <div class="card-title">
+        <span>🗺️</span> 엔터프라이즈 전주기 데이터 & AX 시스템 아키텍처 (Enterprise Architecture)
+      </div>
+      <div class="card-desc">
+        엔지니어 업무 ➔ 레거시 시스템 ➔ 전사 DataLake ➔ 팀 자체 개발/EARS/RISE 및 팀DB/S3 ➔ <strong>Project Manager(업무 모판·과제 매핑·FTE 재배치)</strong>로 이어지는 전체 아키텍처 맵입니다.
+      </div>
+
+      <div class="diag-container" style="background:#FFFFFF; border:1px solid var(--outline);">
+
+        <!-- Tier 1: 엔지니어 현장 업무 -->
+        <div class="arch-layer" style="border-left: 4px solid var(--ink);">
+          <div class="arch-layer-head">
+            <div>
+              <span style="font-size:12px; font-weight:800; color:var(--ink);">Tier 1. 엔지니어 현장 업무 (Field Engineer Operations)</span>
+              <div style="font-size:11px; color:var(--muted);">반도체 Fab 클린룸 교대 업무 및 오피스 엔지니어링 수행</div>
+            </div>
+            <span class="arch-layer-tag tag-gray">현장 업무 트랜잭션</span>
+          </div>
+          <div class="arch-grid-4">
+            <div class="arch-box">
+              <div class="arch-box-title">알람 확인 & 리셋</div>
+              <div class="arch-box-desc">교대 · 이벤트 업무</div>
+            </div>
+            <div class="arch-box">
+              <div class="arch-box-title">정기 PM 사전 점검</div>
+              <div class="arch-box-desc">교대 · 루틴 업무</div>
+            </div>
+            <div class="arch-box">
+              <div class="arch-box-title">챔버 물리 부품 교체</div>
+              <div class="arch-box-desc">교대 · 상주 물리 업무</div>
+            </div>
+            <div class="arch-box">
+              <div class="arch-box-title">레시피/결함 원인 분석</div>
+              <div class="arch-box-desc">오피스 · 분석 업무</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Static Pipe Connector 1 -->
+        <div class="pipe-connector">
+          <span>▼ 설비 이벤트 & 현장 엔지니어 작업 로그 발생</span>
+        </div>
+
+        <!-- Tier 2: 전사 레거시 관리 시스템 -->
+        <div class="arch-layer" style="border-left: 4px solid var(--secondary); background:#F8F9FA;">
+          <div class="arch-layer-head">
+            <div>
+              <span style="font-size:12px; font-weight:800; color:var(--secondary);">Tier 2. 전사 레거시 시스템 (Enterprise Legacy Systems)</span>
+              <div style="font-size:11px; color:var(--muted);">엔지니어가 일하면 모든 데이터와 상태가 사내 기간계 시스템에서 관리됨</div>
+            </div>
+            <span class="arch-layer-tag tag-navy">전사 기간계 인프라</span>
+          </div>
+          <div class="arch-grid-4">
+            <div class="arch-box" style="background:#fff;">
+              <div class="arch-box-title">MES</div>
+              <div class="arch-box-desc">제조실행 & Lot 이력</div>
+            </div>
+            <div class="arch-box" style="background:#fff;">
+              <div class="arch-box-title">YMS</div>
+              <div class="arch-box-desc">수율 & 결함 데이터</div>
+            </div>
+            <div class="arch-box" style="background:#fff;">
+              <div class="arch-box-title">FDC</div>
+              <div class="arch-box-desc">설비 결함 & 인터락 감지</div>
+            </div>
+            <div class="arch-box" style="background:#fff;">
+              <div class="arch-box-title">EES</div>
+              <div class="arch-box-desc">설비 엔지니어링 제어</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Static Pipe Connector 2 -->
+        <div class="pipe-connector">
+          <span>▼ 전사 원천 로그 시계열 스트리밍 적재</span>
+        </div>
+
+        <!-- Tier 3: 전사 데이터레이크 -->
+        <div class="arch-layer" style="border-left: 4px solid #5B6475;">
+          <div class="arch-layer-head">
+            <div>
+              <span style="font-size:12px; font-weight:800; color:var(--ink);">Tier 3. 전사 데이터레이크 (Enterprise DataLake)</span>
+              <div style="font-size:11px; color:var(--muted);">전사 설비 알람 로그, 인터락 이력, Lot 생산 실적 원천 데이터 통합 보관소</div>
+            </div>
+            <span class="arch-layer-tag tag-gray">전사 빅데이터 저장소</span>
+          </div>
+          <div style="background:#F8F9FA; border:1px solid #E2E4E9; border-radius:6px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+            <div style="font-size:11px; color:var(--muted);">
+              • FDC 알람/인터락 시계열 로그 &nbsp;|&nbsp; • MES Lot 이동/트랙인·아웃 이력 &nbsp;|&nbsp; • YMS 웨이퍼 맵 검사 결과
+            </div>
+            <span style="font-size:11px; font-weight:700; color:var(--primary);">사내 전사 쿼리 엔진 연동</span>
+          </div>
+        </div>
+
+        <!-- Static Pipe Connector 3 -->
+        <div class="pipe-connector">
+          <span style="color:#7F56D9;">▼ 일일 배치 쿼리 및 팀 자동제어/RPA 인터페이스 연동</span>
+        </div>
+
+        <!-- Tier 4: 팀 자체 개발 & 자동제어 인프라 -->
+        <div class="arch-layer" style="border-left: 4px solid #7F56D9; background:#FAF9FE;">
+          <div class="arch-layer-head">
+            <div>
+              <span style="font-size:12px; font-weight:800; color:#5925DC;">Tier 4. 팀 자체 개발 & 자동제어 인프라 (Team AX & Automation Layer)</span>
+              <div style="font-size:11px; color:var(--muted);">팀에서 직접 구축한 시스템과 사내 자동제어 플랫폼, 그리고 이를 운영하기 위한 팀 전용 저장소</div>
+            </div>
+            <span class="arch-layer-tag" style="background:#F4EBFF; color:#7F56D9;">팀 전용 AX 운영 기반</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom:6px;">
+            <!-- 팀 자체 개발 및 툴 -->
+            <div style="background:#FFFFFF; border:1px solid #E2E4E9; border-radius:6px; padding:10px 14px;">
+              <div style="font-size:11px; font-weight:700; color:#5925DC; margin-bottom:4px;">팀 자체 개발 시스템 & 자동제어 툴</div>
+              <div style="display:flex; gap:8px;">
+                <div style="flex:1; background:#F8F9FA; padding:6px 8px; border-radius:4px; font-size:11px; text-align:center;">
+                  <strong>팀 웹/앱 솔루션</strong><br><span style="font-size:10px; color:var(--muted);">사내 웹 도구 & API</span>
+                </div>
+                <div style="flex:1; background:#F8F9FA; padding:6px 8px; border-radius:4px; font-size:11px; text-align:center;">
+                  <strong>EARS (사내 RPA)</strong><br><span style="font-size:10px; color:var(--muted);">UI 자동 조작 매크로</span>
+                </div>
+                <div style="flex:1; background:#F8F9FA; padding:6px 8px; border-radius:4px; font-size:11px; text-align:center;">
+                  <strong>RISE</strong><br><span style="font-size:10px; color:var(--muted);">사내 자동제어 플랫폼</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 팀 전용 저장소 -->
+            <div style="background:#FFFFFF; border:1px solid #E2E4E9; border-radius:6px; padding:10px 14px;">
+              <div style="font-size:11px; font-weight:700; color:#5925DC; margin-bottom:4px;">팀 전용 운영 데이터 저장소</div>
+              <div style="display:flex; gap:8px;">
+                <div style="flex:1; background:#F8F9FA; padding:6px 8px; border-radius:4px; font-size:11px; text-align:center;">
+                  <strong>팀 DB (RDBMS)</strong><br><span style="font-size:10px; color:var(--muted);">과제 운영/로그 적재</span>
+                </div>
+                <div style="flex:1; background:#F8F9FA; padding:6px 8px; border-radius:4px; font-size:11px; text-align:center;">
+                  <strong>S3 Storage</strong><br><span style="font-size:10px; color:var(--muted);">집계 Parquet 파일</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Static Pipe Connector 4 -->
+        <div class="pipe-connector">
+          <span style="color:var(--primary); font-weight:700;">▼ 팀 DB/S3 실측치 집계 자동 동기화 & 과제 실적 연동</span>
+        </div>
+
+        <!-- Tier 5: Project Manager 통합 시스템 (본 플랫폼) -->
+        <div class="arch-layer" style="border: 2px solid var(--primary); border-left: 6px solid var(--primary); background:#FAFBFD; box-shadow:var(--shadow-sm);">
+          <div class="arch-layer-head">
+            <div>
+              <span style="font-size:13px; font-weight:800; color:var(--primary);">Tier 5. ★ Project Manager 통합 시스템 (본 플랫폼의 핵심 역할)</span>
+              <div style="font-size:11px; color:var(--muted);">엔지니어 업무 모판 관리부터 과제 매핑, 변화 수준 통제, FTE 기반 성과관리 및 인력 재배치 완결</div>
+            </div>
+            <span class="arch-layer-tag tag-blue" style="font-size:11px; padding:4px 10px;">인력 의사결정 모판</span>
+          </div>
+
+          <div class="arch-grid-4">
+            <div class="arch-box" style="background:#FFFFFF; border:1px solid var(--primary-soft); text-align:left;">
+              <div style="font-size:11px; font-weight:800; color:var(--primary); margin-bottom:2px;">1. 업무 모판 관리</div>
+              <div style="font-size:11px; color:var(--ink); font-weight:700;">표준 대/중/소분류 사전</div>
+              <div style="font-size:10px; color:var(--muted); margin-top:2px;">전 파트 공통 표준 업무 모판 및 기준 공수 체계화</div>
+            </div>
+
+            <div class="arch-box" style="background:#FFFFFF; border:1px solid var(--primary-soft); text-align:left;">
+              <div style="font-size:11px; font-weight:800; color:var(--primary); margin-bottom:2px;">2. 소분류 AX 과제 매핑</div>
+              <div style="font-size:11px; color:var(--ink); font-weight:700;">E2E Flow & 과제 결속</div>
+              <div style="font-size:10px; color:var(--muted); margin-top:2px;">소분류별 자체개발/EARS/RISE 과제 1:N 링크 및 라이프사이클</div>
+            </div>
+
+            <div class="arch-box" style="background:#FFFFFF; border:1px solid var(--primary-soft); text-align:left;">
+              <div style="font-size:11px; font-weight:800; color:var(--primary); margin-bottom:2px;">3. Tool 변화 수준 관리</div>
+              <div style="font-size:11px; color:var(--ink); font-weight:700;">기술 스택 형상 거버넌스</div>
+              <div style="font-size:10px; color:var(--muted); margin-top:2px;">팀DB, 서버, EARS, API 버전 및 변경 영향도 추적</div>
+            </div>
+
+            <div class="arch-box" style="background:var(--secondary); color:#FFFFFF; text-align:left;">
+              <div style="font-size:11px; font-weight:800; color:#8E9AF5; margin-bottom:2px;">4. FTE 성과 & 재배치</div>
+              <div style="font-size:11px; color:#FFFFFF; font-weight:700;">인력 재분배 의사결정</div>
+              <div style="font-size:10px; color:#CACED6; margin-top:2px;">과부하 해소 ➔ FTE 산출 ➔ 신규 팹 셋업 라인 전환 배치</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       TAB 1: [체험] 소분류 업무 & FTE 시뮬레이터 (간결·명료화)
+       ======================================================== -->
+  <div class="panel" id="tab-1">
+    <div class="card">
+      <div class="card-title">
+        <span>🧮</span> 라이브 FTE 시뮬레이터 (현장 파트 & 소분류 업무 기반)
+      </div>
+      <div class="card-desc">
+        소분류 업무별 AX 과제 스위치를 켜고 끄며, <strong>교대 상주 2인 슬롯</strong>과 <strong>야근 소멸 ➔ FTE 확보</strong>가 어떻게 연결되는지 직접 체험해 보세요.
+      </div>
+
+      <!-- 파트 선택 프리셋 버튼 -->
+      <div style="display:flex; justify-content:space-between; align-items:center; background:#F8F9FA; padding:12px 16px; border-radius:8px; border:1px solid var(--outline); margin-bottom:16px;">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:12px; font-weight:700;">파트 선택:</span>
+          <button class="btn btn-outline" id="pbtn-0" style="padding:4px 10px; font-size:11px; border-color:var(--primary); background:var(--primary-soft); color:var(--primary); font-weight:700;" onclick="loadPreset(0)">L1 포토설비 (18명)</button>
+          <button class="btn btn-outline" id="pbtn-1" style="padding:4px 10px; font-size:11px;" onclick="loadPreset(1)">L2 확산공정 (14명)</button>
+          <button class="btn btn-outline" id="pbtn-2" style="padding:4px 10px; font-size:11px;" onclick="loadPreset(2)">L3 박막설비 (24명)</button>
+        </div>
+        <div id="meta-txt" style="font-size:11px; font-weight:600; color:var(--secondary);">
+          화성 · L1 | 설비 | 총원 18명 | 챔버 24대
+        </div>
+      </div>
+
+      <!-- 2분할 레이아웃 -->
+      <div style="display:grid; grid-template-columns: 1.35fr 1fr; gap:20px;">
+
+        <!-- 좌측: 업무 5개 테이블 -->
+        <div>
+          <table class="task-table">
+            <thead>
+              <tr>
+                <th>소분류 업무</th>
+                <th style="width:75px;">기준 공수</th>
+                <th>매핑 AX 과제</th>
+                <th style="width:105px; text-align:right;">절감 / 잔여</th>
+              </tr>
+            </thead>
+            <tbody id="task-rows">
+              <!-- JS로 5개 행 렌더링 -->
+            </tbody>
+          </table>
+
+          <!-- 묶음 토글 -->
+          <div style="background:#FAFBFD; border:1px solid var(--primary-soft); border-left:3px solid var(--primary); border-radius:6px; padding:10px 14px; margin-top:12px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:12px; font-weight:700; color:var(--ink);">가상 조직개편 파트 묶음(Bundle) 적용</div>
+              <div style="font-size:10px; color:var(--muted);">인접 파트와 슬롯을 공유하여 기준정보 최소인원 상주 최적화</div>
+            </div>
+            <input type="checkbox" id="chk-bundle" style="width:18px; height:18px; accent-color:var(--primary); cursor:pointer;" onchange="calcSim()">
+          </div>
+        </div>
+
+        <!-- 우측: 결과 비주얼 대시보드 -->
+        <div style="display:flex; flex-direction:column; gap:12px;">
+
+          <!-- FTE 메트릭 -->
+          <div style="background:#FFFFFF; border:1px solid var(--outline); border-radius:var(--radius-md); padding:16px; text-align:center;">
+            <div style="font-size:11px; font-weight:700; color:var(--muted);">최종 FTE 확보량 (가용 인력)</div>
+            <div style="font-size:36px; font-weight:800; color:var(--primary); line-height:1.1; margin:4px 0;" id="out-fte">+2.2 명</div>
+            <div style="font-size:11px; color:var(--muted);" id="out-fte-sub">총원 18명 ➔ 필요 인원 15.8명</div>
+          </div>
+
+          <!-- 2단계 가치 브리지 -->
+          <div style="background:#F8F9FA; border:1px solid var(--outline); border-radius:var(--radius-md); padding:14px;">
+            <div style="font-size:11px; font-weight:700; color:var(--secondary); margin-bottom:8px; display:flex; justify-content:space-between;">
+              <span>📈 2단계 가치 브리지</span>
+              <span id="out-wlb-badge" style="font-size:10px; background:var(--primary-soft); color:var(--primary); font-weight:700; padding:1px 6px; border-radius:4px;">WLB 100% 정상</span>
+            </div>
+            <div style="font-size:11px; margin-bottom:4px; display:flex; justify-content:space-between;">
+              <span>1단계: 야근(OT) 소멸</span>
+              <strong id="out-ot" style="color:var(--primary);">-650h/년 (소멸)</strong>
+            </div>
+            <div style="font-size:11px; display:flex; justify-content:space-between;">
+              <span>2단계: 순수 FTE 확보</span>
+              <strong id="out-surplus" style="color:var(--secondary);">+4,575h (2.2명분)</strong>
+            </div>
+          </div>
+
+          <!-- 4조 3교대 슬롯 박스 -->
+          <div style="background:#FFFFFF; border:1px solid var(--outline); border-radius:var(--radius-md); padding:12px;">
+            <div style="font-size:11px; font-weight:700; color:var(--secondary); margin-bottom:6px; display:flex; justify-content:space-between;">
+              <span>🛡️ 4조 3교대 상주 슬롯 (최소 2인 룰)</span>
+              <span id="out-slot-rule" style="font-size:10px; color:var(--muted);">단독 기준정보 최소인원</span>
+            </div>
+            <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap:6px; margin-bottom:6px;">
+              <div class="slot-box">
+                <div style="font-size:9px; font-weight:700; color:var(--muted);">DAY</div>
+                <div class="slot-icon" id="icon-day">👤👤</div>
+                <div class="slot-txt" id="txt-day">2.0명</div>
+              </div>
+              <div class="slot-box">
+                <div style="font-size:9px; font-weight:700; color:var(--muted);">SWING</div>
+                <div class="slot-icon" id="icon-swing">👤👤</div>
+                <div class="slot-txt" id="txt-swing">2.0명</div>
+              </div>
+              <div class="slot-box">
+                <div style="font-size:9px; font-weight:700; color:var(--muted);">GY</div>
+                <div class="slot-icon" id="icon-gy">👤👤</div>
+                <div class="slot-txt" id="txt-gy">2.0명</div>
+              </div>
+            </div>
+            <div style="font-size:10px; color:var(--muted); text-align:center;">
+              교대 필요: <strong id="out-shift-n" style="color:var(--ink);">8.0명</strong> | 오피스 필요: <strong id="out-office-n" style="color:var(--ink);">7.8명</strong>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       TAB 2: 교대 최소인원 기준정보 & 묶음 최적화 다이어그램
+       ======================================================== -->
+  <div class="panel" id="tab-2">
+    <div class="card">
+      <div class="card-title">
+        <span>⚙️</span> 교대 최소인원 기준정보 & 파트 묶음(Bundle) 최적화 시각 다이어그램
+      </div>
+      <div class="card-desc">
+        교대 2인은 고정 상수가 아니며, <strong>파트별 기준정보에 설정된 교대근무 최소인원(1명, 2명 등)</strong>에 따라 유연하게 시뮬레이션됩니다. 파트 묶음은 이 최소인원 하한을 슬롯 공유로 풀어내는 핵심 레버리지입니다.
+      </div>
+
+      <div class="compare-boxes">
+        <!-- 단독 운영 -->
+        <div class="compare-box bad">
+          <div class="compare-box-title" style="color:var(--muted);">Case A. 단독 파트 운영 (파트별 기준정보 최소인원 하한 제약)</div>
+          <p style="font-size:11px; color:var(--muted); margin-bottom:12px;">
+            업무량이 아무리 적어도, 파트별 기준정보에 정의된 <strong>근무대당 최소인원 하한</strong>이 각각 독립 적용됨
+          </p>
+
+          <div style="background:#F8F9FA; border:1px solid var(--outline); border-radius:6px; padding:12px; margin-bottom:8px;">
+            <div style="font-size:11px; font-weight:700; color:var(--ink); margin-bottom:6px;">파트 A 단독 운영 (기준정보 최소인원: 2명 설정 시)</div>
+            <div style="display:flex; justify-content:space-around; font-size:11px;">
+              <span>DAY: 👤👤 (2명)</span>
+              <span>SWING: 👤👤 (2명)</span>
+              <span>GY: 👤👤 (2명)</span>
+            </div>
+            <div style="text-align:right; font-size:11px; font-weight:700; color:var(--error); margin-top:6px;">
+              ➔ 4조 기준 최소 필요인원: 8.0명 ($4\text{조} \times 2\text{명}$)
+            </div>
+          </div>
+
+          <div style="background:#F8F9FA; border:1px solid var(--outline); border-radius:6px; padding:12px;">
+            <div style="font-size:11px; font-weight:700; color:var(--ink); margin-bottom:6px;">파트 B 단독 운영 (기준정보 최소인원: 2명 설정 시)</div>
+            <div style="display:flex; justify-content:space-around; font-size:11px;">
+              <span>DAY: 👤👤 (2명)</span>
+              <span>SWING: 👤👤 (2명)</span>
+              <span>GY: 👤👤 (2명)</span>
+            </div>
+            <div style="text-align:right; font-size:11px; font-weight:700; color:var(--error); margin-top:6px;">
+              ➔ 4조 기준 최소 필요인원: 8.0명 ($4\text{조} \times 2\text{명}$)
+            </div>
+          </div>
+
+          <div style="text-align:center; padding:10px; font-size:12px; font-weight:700; color:var(--error);">
+            단독 각각 운영 시 총 필요 인원: 16.0명 (하한선으로 인한 중복 상주)
+          </div>
+        </div>
+
+        <!-- 묶음 운영 -->
+        <div class="compare-box good">
+          <div class="compare-box-title" style="color:var(--primary);">Case B. 파트 묶음(Bundle) 통합 운영 (상주 슬롯 공유)</div>
+          <p style="font-size:11px; color:var(--muted); margin-bottom:12px;">
+            인접 두 파트가 묶이면, 근무대별 최소인원 하한을 <strong>통합 슬롯으로 상호 공유</strong>하여 중복 인원 해소
+          </p>
+
+          <div style="background:var(--primary-soft); border:1px solid var(--primary); border-radius:6px; padding:16px; margin-bottom:14px;">
+            <div style="font-size:12px; font-weight:700; color:var(--primary); margin-bottom:8px;">파트 A + 파트 B 통합 슬롯 공유 (기준정보 최소인원 충족)</div>
+            <div style="display:flex; justify-content:space-around; font-size:12px; font-weight:700;">
+              <span>DAY: 👤(A) + 👤(B) = 2명</span>
+              <span>SWING: 👤(A) + 👤(B) = 2명</span>
+              <span>GY: 👤(A) + 👤(B) = 2명</span>
+            </div>
+            <div style="text-align:right; font-size:12px; font-weight:700; color:var(--primary); margin-top:10px;">
+              ➔ 4조 기준 통합 필요인원: 8.0명 (각 파트 4명 몫으로 경감!)
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF; border:1px solid var(--outline); border-radius:6px; padding:12px; text-align:center;">
+            <div style="font-size:11px; color:var(--muted);">조직개편 묶음 최적화 효과 (기준정보 연동)</div>
+            <div style="font-size:18px; font-weight:800; color:var(--primary); margin-top:2px;">
+              16명 필요 ➔ 8명으로 통합 (순수 FTE +8명 확보!)
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================
+       TAB 3: 추진 마일스톤 (Phase 1~4)
+       ======================================================== -->
+  <div class="panel" id="tab-3">
+    <div class="card">
+      <div class="card-title">
+        <span>🚀</span> 로드맵 4단계 실행 타임라인
+      </div>
+      <div class="card-desc">
+        현재 달성된 기반부터 시작하여 완전한 Closed-Loop 선순환에 이르는 단계별 마일스톤입니다.
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-top:10px;">
+        <div style="background:#FFFFFF; border:1px solid var(--outline); border-top:4px solid var(--primary); border-radius:8px; padding:16px;">
+          <span style="font-size:10px; font-weight:700; background:var(--primary-soft); color:var(--primary); padding:2px 6px; border-radius:4px;">Phase 1 • 완료</span>
+          <div style="font-size:13px; font-weight:700; color:var(--ink); margin:6px 0 4px;">FTE 시뮬레이터 구축</div>
+          <div style="font-size:11px; color:var(--muted); line-height:1.4;">
+            • 4조3교대·2인룰 인원 엔진<br>
+            • 대시보드 4섹션 (KPI/인적/업무/AX)<br>
+            • 3색 컴팩트 UI 체계 확립
+          </div>
+        </div>
+
+        <div style="background:#FAFBFD; border:1px solid var(--primary); border-top:4px solid #F79009; border-radius:8px; padding:16px; box-shadow:var(--shadow-sm);">
+          <span style="font-size:10px; font-weight:700; background:#FEF0C7; color:#B54708; padding:2px 6px; border-radius:4px;">Phase 2 • 차기 착수</span>
+          <div style="font-size:13px; font-weight:700; color:var(--ink); margin:6px 0 4px;">E2E Flow & 과제 PM</div>
+          <div style="font-size:11px; color:var(--muted); line-height:1.4;">
+            • 소분류 E2E Flow 시각화<br>
+            • 5단계 과제 라이프사이클 관리<br>
+            • 주간 스크럼 액션아이템 할당
+          </div>
+        </div>
+
+        <div style="background:#FFFFFF; border:1px solid var(--outline); border-top:4px solid var(--outline); border-radius:8px; padding:16px;">
+          <span style="font-size:10px; font-weight:700; background:#F2F4F7; color:var(--muted); padding:2px 6px; border-radius:4px;">Phase 3 • 계획 중</span>
+          <div style="font-size:13px; font-weight:700; color:var(--ink); margin:6px 0 4px;">DataLake 실측 파이프라인</div>
+          <div style="font-size:11px; color:var(--muted); line-height:1.4;">
+            • DataLake 쿼리 브릿지 연동<br>
+            • S3 Parquet 실측 자동 적재<br>
+            • 인터락/PM 분석 대시보드
+          </div>
+        </div>
+
+        <div style="background:#FFFFFF; border:1px solid var(--outline); border-top:4px solid var(--outline); border-radius:8px; padding:16px;">
+          <span style="font-size:10px; font-weight:700; background:#F2F4F7; color:var(--muted); padding:2px 6px; border-radius:4px;">Phase 4 • 미래 비전</span>
+          <div style="font-size:13px; font-weight:700; color:var(--ink); margin:6px 0 4px;">FTE 실기여도 & VOC 루프</div>
+          <div style="font-size:11px; color:var(--muted); line-height:1.4;">
+            • 배포 과제 FTE 기여도 자동 증명<br>
+            • 신규 팹 라인 인력 재배치 지원<br>
+            • Closed-Loop VOC 자동화
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 푸터 -->
+  <footer>
+    <p>반도체 Fab AX 전주기 운영 & 인력 가치 혁신 로드맵 (비주얼 다이어그램 에디션)</p>
+  </footer>
+
+</div>
+
+<script>
+  function switchTab(idx) {
+    const btns = document.querySelectorAll('.nav-btn');
+    btns.forEach((b, i) => b.classList.toggle('active', i === idx));
+
+    const panels = document.querySelectorAll('.panel');
+    panels.forEach((p, i) => p.classList.toggle('active', i === idx));
+  }
+
+  // ========================================================
+  // 라이브 시뮬레이터 데이터 & 로직
+  // ========================================================
+  const PRESETS = [
+    {
+      name: "L1 포토설비",
+      meta: "화성 · L1 | 설비 | 총원 18명 | 챔버 24대",
+      head: 18,
+      baseOT: 650,
+      tasks: [
+        { name: "챔버 알람 확인 & 원격 리셋", isShift: true, baseH: 3450, axName: "포토 FDC 자동복구 봇", axRate: 70, enabled: true, isFixed: false },
+        { name: "정기 PM 점검 & 인터락 해제", isShift: true, baseH: 2600, axName: "EARS PM 자동 해제", axRate: 50, enabled: true, isFixed: false },
+        { name: "챔버 물리 부품 교체", isShift: true, baseH: 6800, axName: "물리 상주 업무 (자동화 불가)", axRate: 0, enabled: false, isFixed: true },
+        { name: "Lot 레시피 정합성 검증", isShift: false, baseH: 1850, axName: "MES 레시피 체크 API", axRate: 80, enabled: true, isFixed: false },
+        { name: "웨이퍼 결함(Defect) 분석", isShift: false, baseH: 3500, axName: "YMS 결함 비전 AI", axRate: 40, enabled: true, isFixed: false }
+      ]
+    },
+    {
+      name: "L2 확산공정",
+      meta: "평택 · L2 | 공정 | 총원 14명 | 챔버 20대",
+      head: 14,
+      baseOT: 320,
+      tasks: [
+        { name: "공정 알람 모니터링", isShift: true, baseH: 2200, axName: "FDC 공정 알람 봇", axRate: 60, enabled: true, isFixed: false },
+        { name: "가스 압력 일일 점검", isShift: true, baseH: 1900, axName: "압력 센서 IoT", axRate: 50, enabled: true, isFixed: false },
+        { name: "퍼니스 샘플 물리 투입", isShift: true, baseH: 4200, axName: "라인 상주 필수 (자동화 불가)", axRate: 0, enabled: false, isFixed: true },
+        { name: "확산 레시피 튜닝 시뮬레이션", isShift: false, baseH: 3100, axName: "공정 모델링 AI", axRate: 70, enabled: true, isFixed: false },
+        { name: "수율 저하 로트 인과 분석", isShift: false, baseH: 3600, axName: "YMS 빅데이터 분석기", axRate: 50, enabled: true, isFixed: false }
+      ]
+    },
+    {
+      name: "L3 박막설비 (대형)",
+      meta: "평택 · L3 | 설비 | 총원 24명 | 챔버 32대 (대형 파트)",
+      head: 24,
+      baseOT: 1250,
+      tasks: [
+        { name: "진공 챔버 알람 복구", isShift: true, baseH: 4800, axName: "진공 펌프 복구 Agent", axRate: 70, enabled: true, isFixed: false },
+        { name: "타겟 소모품 수명 예측", isShift: true, baseH: 3400, axName: "EARS 수명 예측 봇", axRate: 60, enabled: true, isFixed: false },
+        { name: "CVD 챔버 쉴드 물리 세정", isShift: true, baseH: 9200, axName: "물리 상주 필수 (자동화 불가)", axRate: 0, enabled: false, isFixed: true },
+        { name: "두께 계측 데이터 자동 맵핑", isShift: false, baseH: 2400, axName: "계측기 연동 API", axRate: 85, enabled: true, isFixed: false },
+        { name: "파티클 결함 원인 규명", isShift: false, baseH: 4500, axName: "파티클 인과 AI", axRate: 40, enabled: true, isFixed: false }
+      ]
+    }
+  ];
+
+  let curPreset = 0;
+  let activeTasks = [];
+
+  function loadPreset(idx) {
+    curPreset = idx;
+    [0, 1, 2].forEach(i => {
+      const b = document.getElementById(`pbtn-${i}`);
+      b.style.borderColor = (i === idx) ? 'var(--primary)' : 'var(--outline)';
+      b.style.background = (i === idx) ? 'var(--primary-soft)' : 'var(--surface)';
+      b.style.color = (i === idx) ? 'var(--primary)' : 'var(--ink)';
+      b.style.fontWeight = (i === idx) ? '700' : '600';
+    });
+
+    const p = PRESETS[idx];
+    document.getElementById('meta-txt').innerText = p.meta;
+    activeTasks = JSON.parse(JSON.stringify(p.tasks));
+    drawTable();
+    calcSim();
+  }
+
+  function drawTable() {
+    const tbody = document.getElementById('task-rows');
+    tbody.innerHTML = '';
+
+    activeTasks.forEach((t, i) => {
+      const tr = document.createElement('tr');
+      const saved = t.enabled ? Math.round(t.baseH * (t.axRate / 100)) : 0;
+      const rem = t.baseH - saved;
+
+      tr.innerHTML = `
+        <td>
+          <div style="font-weight:700; color:var(--ink);">${t.name}</div>
+          <div style="font-size:10px; color:var(--muted);">${t.isShift ? '교대' : '오피스'}</div>
+        </td>
+        <td style="font-weight:600; font-feature-settings:'tnum' 1;">${t.baseH.toLocaleString()}h</td>
+        <td>
+          <div style="display:flex; align-items:center; gap:6px;">
+            ${!t.isFixed ? `
+              <input type="checkbox" id="tchk-${i}" ${t.enabled ? 'checked' : ''} onchange="tToggle(${i})" style="cursor:pointer;">
+            ` : `<span style="font-size:10px; color:var(--error); font-weight:700;">[상주]</span>`}
+            <div>
+              <div style="font-size:11px; font-weight:600; color:${t.enabled ? 'var(--primary)' : 'var(--muted)'};">${t.axName}</div>
+              ${!t.isFixed ? `
+                <div style="display:flex; align-items:center; gap:4px; font-size:10px; color:var(--muted);">
+                  <span>자동화율:</span>
+                  <input type="range" min="10" max="90" step="5" value="${t.axRate}" style="width:60px;" ${!t.enabled ? 'disabled' : ''} oninput="tRate(${i}, this.value)">
+                  <strong style="color:var(--ink);">${t.axRate}%</strong>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        </td>
+        <td style="text-align:right; font-feature-settings:'tnum' 1;">
+          <div style="font-weight:700; color:${t.enabled ? 'var(--primary)' : 'var(--muted)'};">-${saved.toLocaleString()}h</div>
+          <div style="font-size:10px; color:var(--muted);">잔여: ${rem.toLocaleString()}h</div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function tToggle(i) {
+    activeTasks[i].enabled = document.getElementById(`tchk-${i}`).checked;
+    drawTable();
+    calcSim();
+  }
+
+  function tRate(i, val) {
+    activeTasks[i].axRate = parseInt(val, 10);
+    drawTable();
+    calcSim();
+  }
+
+  function calcSim() {
+    const p = PRESETS[curPreset];
+    const isBundled = document.getElementById('chk-bundle').checked;
+
+    let totSaved = 0;
+    let sRem = 0;
+    let oRem = 0;
+
+    activeTasks.forEach(t => {
+      const s = t.enabled ? Math.round(t.baseH * (t.axRate / 100)) : 0;
+      totSaved += s;
+      const r = t.baseH - s;
+      if (t.isShift) sRem += r;
+      else oRem += r;
+    });
+
+    const oNeed = oRem / 2080;
+    const minSlot = isBundled ? 1.0 : 2.0;
+    const slotWork = sRem / (3 * 2080);
+    const slotNeed = Math.max(slotWork, minSlot);
+    const sNeed = slotNeed * 4;
+
+    const totNeed = Math.round((sNeed + oNeed) * 10) / 10;
+    const fteFreed = Math.max(0, Math.round((p.head - totNeed) * 10) / 10);
+
+    const ot = p.baseOT;
+    const otRes = Math.min(totSaved, ot);
+    const surplus = Math.max(0, totSaved - ot);
+
+    document.getElementById('out-fte').innerText = `+${fteFreed.toFixed(1)} 명`;
+    document.getElementById('out-fte-sub').innerText = `총원 ${p.head}명 ➔ 필요 인원 ${totNeed.toFixed(1)}명`;
+    document.getElementById('out-ot').innerText = `-${otRes.toLocaleString()}h/년 (소멸)`;
+    document.getElementById('out-surplus').innerText = `+${surplus.toLocaleString()}h (${fteFreed.toFixed(1)}명분)`;
+
+    const wBadge = document.getElementById('out-wlb-badge');
+    wBadge.innerText = (totSaved >= ot) ? 'WLB 100% 정상' : `야근 ${Math.round((totSaved/ot)*100)}% 해소`;
+
+    document.getElementById('out-slot-rule').innerText = isBundled ? '묶음 슬롯 공유' : '단독 최소인원 적용';
+    const icons = isBundled && slotNeed <= 1.0 ? '👤' : '👤👤';
+    document.getElementById('icon-day').innerText = icons;
+    document.getElementById('icon-swing').innerText = icons;
+    document.getElementById('icon-gy').innerText = icons;
+    document.getElementById('txt-day').innerText = slotNeed.toFixed(1) + "명";
+    document.getElementById('txt-swing').innerText = slotNeed.toFixed(1) + "명";
+    document.getElementById('txt-gy').innerText = slotNeed.toFixed(1) + "명";
+
+    document.getElementById('out-shift-n').innerText = sNeed.toFixed(1) + "명";
+    document.getElementById('out-office-n').innerText = oNeed.toFixed(1) + "명";
+  }
+
+  loadPreset(0);
+</script>
+
+</body>
+</html>

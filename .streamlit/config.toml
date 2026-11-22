@@ -1,0 +1,30 @@
+# 앱 테마 — DESIGN.md("Clear Blue")의 토큰을 Streamlit 테마로 옮긴 것. 색을 바꿀 때는 DESIGN.md를 먼저 고쳐요.
+[theme]
+base = "light"
+primaryColor = "#0A24E9"              # colors.primary
+backgroundColor = "#F0F2F5"           # colors.background
+secondaryBackgroundColor = "#FFFFFF"  # colors.surface (입력 위젯 배경)
+textColor = "#0B0D17"                 # colors.on-surface
+linkColor = "#0A24E9"
+redColor = "#B42318"                  # colors.error
+greenColor = "#0A24E9"                # 긍정 = 블루 (st.metric 증가 화살표, st.success) — 3색 체계, 녹색 없음
+orangeColor = "#B42318"               # 경고 = 레드 (주황 없음)
+yellowColor = "#B42318"               # st.warning도 레드
+violetColor = "#29315D"               # colors.secondary (보라 없음)
+blueColor = "#0A24E9"
+grayColor = "#5B6475"                 # colors.on-surface-muted
+borderColor = "#CACED6"               # colors.outline
+dataframeBorderColor = "#CACED6"
+dataframeHeaderBackgroundColor = "#F0F2F5"
+showWidgetBorder = true
+baseRadius = "10px"                   # rounded.md
+buttonRadius = "10px"
+# Pretendard 웹 글꼴. 사내망에서 못 받으면 app/ui.py의 CSS 대체 글꼴(맑은 고딕 등)로 보여요.
+font = "Pretendard:https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+headingFont = "Pretendard:https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css"
+headingFontWeights = [700, 700, 600]
+metricValueFontWeight = 700
+chartCategoricalColors = ["#0A24E9", "#29315D", "#5B6475", "#152EAE", "#8E9AF5", "#A9B6C0", "#3E4784", "#D0D5DD"]
+
+[client]
+toolbarMode = "minimal"

@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+test-results/
+~$*.xlsx
+
+# 외부에서 받아 설치한 스킬 (공개 저장소에 다시 배포하지 않아요) — skills-lock.json 보고 `npx skills add`로 다시 설치
+.claude/skills/
+.claude/settings.local.json
+# 실수로 생긴 캡처 파일
+/--selector
